@@ -1,4 +1,4 @@
-package com.lme.martianrobots;
+package com.lme.martianrobot;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
