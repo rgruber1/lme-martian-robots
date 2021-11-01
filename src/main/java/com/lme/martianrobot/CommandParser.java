@@ -1,10 +1,14 @@
 package com.lme.martianrobot;
 
+import com.lme.martianrobot.command.Command;
+import com.lme.martianrobot.command.CommandRegistry;
 import com.lme.martianrobot.grid.Coordinates;
 import com.lme.martianrobot.grid.Orientation;
 import com.lme.martianrobot.grid.Position;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import static java.lang.Integer.parseInt;
@@ -13,7 +17,14 @@ import static java.lang.Integer.parseInt;
 public class CommandParser {
 
     private static final Pattern coordinatesPattern = Pattern.compile("\\d{1,5}\\s\\d{1,5}");
-    private static final Pattern positionPattern = Pattern.compile("\\d{1,5}\\s\\d{1,5}\\s[NSEW]{1}");
+    private static final Pattern positionPattern = Pattern.compile("\\d{1,5}\\s\\d{1,5}\\s[NSEW]");
+    private static final Pattern commandPattern = Pattern.compile("[LRF]{1,100}");
+
+    private final CommandRegistry commandRegistry;
+
+    public CommandParser(CommandRegistry commandRegistry) {
+        this.commandRegistry = commandRegistry;
+    }
 
     public boolean isCoordinates(String line) {
         return matches(coordinatesPattern, line);
@@ -21,6 +32,10 @@ public class CommandParser {
 
     public boolean isPosition(String line) {
         return matches(positionPattern, line);
+    }
+
+    public boolean isCommand(String line) {
+        return matches(commandPattern, line);
     }
 
     private boolean matches(Pattern pattern, String line) {
@@ -53,6 +68,14 @@ public class CommandParser {
         Orientation orientation = Orientation.lookupByCode(orientationString.charAt(0));
         return new Position(new Coordinates(Integer.parseInt(x), Integer.parseInt(y)),
                 orientation);
+    }
+
+    public Command[] parseInstructions(String moveInstructions) {
+        List<Command> result = new ArrayList<>();
+        for (char ch : moveInstructions.toCharArray()) {
+            result.add(commandRegistry.getCommandFor(ch));
+        }
+        return result.toArray(Command[]::new);
     }
 
 }

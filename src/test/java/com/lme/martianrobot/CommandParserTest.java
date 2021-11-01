@@ -18,7 +18,7 @@ class CommandParserTest {
     private CommandParser commandParser;
 
     @Test
-    void testIsCoordinatesCommand() {
+    void testIsCoordinates() {
         assertFalse(commandParser.isCoordinates(null));
         assertFalse(commandParser.isCoordinates(""));
         assertFalse(commandParser.isCoordinates("A B"));
@@ -35,7 +35,7 @@ class CommandParserTest {
     }
 
     @Test
-    void testIsPositionCommand() {
+    void testIsPosition() {
         assertFalse(commandParser.isPosition(null));
         assertFalse(commandParser.isPosition(""));
         assertFalse(commandParser.isPosition("A B"));
@@ -47,6 +47,7 @@ class CommandParserTest {
         assertTrue(commandParser.isPosition("1 1 W"));
         assertTrue(commandParser.isPosition("10 10 W"));
 
+        assertFalse(commandParser.isPosition("10 10 WN"));
         assertFalse(commandParser.isPosition("1 1 X"));
     }
 
@@ -57,5 +58,16 @@ class CommandParserTest {
         assertEquals(new Position(new Coordinates(0, 3), Orientation.WEST), commandParser.parsePosition("0 3 W"));
     }
 
+    @Test
+    void testIsCommand() {
+        assertFalse(commandParser.isCommand(null));
+        assertFalse(commandParser.isCommand(""));
+        assertFalse(commandParser.isCommand("A"));
+        assertTrue(commandParser.isCommand("L"));
+        assertTrue(commandParser.isCommand("R"));
+        assertTrue(commandParser.isCommand("F"));
+        assertTrue(commandParser.isCommand("LRF"));
+        assertTrue(commandParser.isCommand("LRF".repeat(33)));
+    }
 
 }
