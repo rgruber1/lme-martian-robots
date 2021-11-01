@@ -12,7 +12,7 @@ import java.util.Scanner;
 @Profile("!test")
 @Component
 @Slf4j
-public class CommandLineParser implements CommandLineRunner {
+public class ApplicationCommandLineRunner implements CommandLineRunner {
 
     @Autowired
     private CommandParser commandParser;
