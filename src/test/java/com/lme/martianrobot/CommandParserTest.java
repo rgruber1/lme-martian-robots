@@ -1,5 +1,9 @@
 package com.lme.martianrobot;
 
+import com.lme.martianrobot.command.Command;
+import com.lme.martianrobot.command.ForwardCommand;
+import com.lme.martianrobot.command.LeftCommand;
+import com.lme.martianrobot.command.RightCommand;
 import com.lme.martianrobot.grid.Coordinates;
 import com.lme.martianrobot.grid.Orientation;
 import com.lme.martianrobot.grid.Position;
@@ -7,6 +11,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+
+import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,6 +23,15 @@ class CommandParserTest {
 
     @Autowired
     private CommandParser commandParser;
+
+    @Autowired
+    private LeftCommand leftCommand;
+
+    @Autowired
+    private RightCommand rightCommand;
+
+    @Autowired
+    private ForwardCommand forwardCommand;
 
     @Test
     void testIsCoordinates() {
@@ -60,14 +76,25 @@ class CommandParserTest {
 
     @Test
     void testIsCommand() {
-        assertFalse(commandParser.isCommand(null));
-        assertFalse(commandParser.isCommand(""));
-        assertFalse(commandParser.isCommand("A"));
-        assertTrue(commandParser.isCommand("L"));
-        assertTrue(commandParser.isCommand("R"));
-        assertTrue(commandParser.isCommand("F"));
-        assertTrue(commandParser.isCommand("LRF"));
-        assertTrue(commandParser.isCommand("LRF".repeat(33)));
+        assertFalse(commandParser.isInstruction(null));
+        assertFalse(commandParser.isInstruction(""));
+        assertFalse(commandParser.isInstruction("A"));
+        assertTrue(commandParser.isInstruction("L"));
+        assertTrue(commandParser.isInstruction("R"));
+        assertTrue(commandParser.isInstruction("F"));
+        assertTrue(commandParser.isInstruction("LRF"));
+        assertTrue(commandParser.isInstruction("LRF".repeat(33)));
+    }
+
+    @Test
+    void testParseInstructions() {
+        assertEquals(Collections.EMPTY_LIST, commandParser.parseInstructions(null));
+        assertEquals(Collections.EMPTY_LIST, commandParser.parseInstructions(""));
+        assertEquals(Collections.EMPTY_LIST, commandParser.parseInstructions("A"));
+        assertEquals(List.of(leftCommand), (commandParser.parseInstructions("L")));
+        assertEquals(List.of(rightCommand), commandParser.parseInstructions("R"));
+        assertEquals(List.of(forwardCommand), commandParser.parseInstructions("F"));
+        assertEquals(List.of(leftCommand, rightCommand, forwardCommand), commandParser.parseInstructions("LRF"));
     }
 
 }

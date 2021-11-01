@@ -4,7 +4,9 @@ import com.lme.martianrobot.grid.Coordinates;
 import com.lme.martianrobot.grid.Grid;
 import com.lme.martianrobot.grid.Position;
 import com.lme.martianrobot.grid.Robot;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ForwardCommand implements Command {
 
     @Override

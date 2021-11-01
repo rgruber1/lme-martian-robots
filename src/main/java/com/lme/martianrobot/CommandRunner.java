@@ -49,7 +49,7 @@ public class CommandRunner {
             gridController.setNewRobotPosition(commandParser.parsePosition(line));
         }
 
-        if (commandParser.isCommand(line)) {
+        if (commandParser.isInstruction(line)) {
             gridController.moveCurrentRobot(commandParser.parseInstructions(line));
             return Optional.of(gridController.describeCurrentRobotPosition());
         }

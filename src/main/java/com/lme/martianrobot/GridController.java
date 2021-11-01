@@ -32,11 +32,8 @@ public class GridController {
         grid.addRobot(currentRobot, position);
     }
 
-    public void moveCurrentRobot(Command[] moveInstructions) {
-        for (Command command : moveInstructions) {
-            command.accept(grid, currentRobot);
-        }
-//        Arrays.stream(moveInstructions).forEach(command -> command.accept(grid, currentRobot));
+    public void moveCurrentRobot(List<Command> moveInstructions) {
+        moveInstructions.forEach(command -> command.accept(grid, currentRobot));
     }
 
     public String describeCurrentRobotPosition() {

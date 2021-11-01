@@ -8,6 +8,7 @@ import com.lme.martianrobot.grid.Position;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -34,7 +35,7 @@ public class CommandParser {
         return matches(positionPattern, line);
     }
 
-    public boolean isCommand(String line) {
+    public boolean isInstruction(String line) {
         return matches(commandPattern, line);
     }
 
@@ -70,12 +71,15 @@ public class CommandParser {
                 orientation);
     }
 
-    public Command[] parseInstructions(String moveInstructions) {
+    public List<Command> parseInstructions(String moveInstructions) {
+        if (!isInstruction(moveInstructions)) {
+            return Collections.emptyList();
+        }
         List<Command> result = new ArrayList<>();
         for (char ch : moveInstructions.toCharArray()) {
             result.add(commandRegistry.getCommandFor(ch));
         }
-        return result.toArray(Command[]::new);
+        return result;
     }
 
 }

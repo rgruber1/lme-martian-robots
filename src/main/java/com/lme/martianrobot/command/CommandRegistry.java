@@ -10,10 +10,10 @@ public class CommandRegistry {
 
     private final Map<Character, Command> registry = new HashMap<>();
 
-    public CommandRegistry() {
-        registry.put('L', new LeftCommand());
-        registry.put('R', new RightCommand());
-        registry.put('F', new ForwardCommand());
+    public CommandRegistry(LeftCommand leftCommand, RightCommand rightCommand, ForwardCommand forwardCommand) {
+        registry.put('L', leftCommand);
+        registry.put('R', rightCommand);
+        registry.put('F', forwardCommand);
     }
 
     public Command getCommandFor(final char ch) {
