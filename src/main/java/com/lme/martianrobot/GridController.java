@@ -8,6 +8,10 @@ import com.lme.martianrobot.grid.Robot;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @Getter
 public class GridController {
@@ -36,7 +40,11 @@ public class GridController {
     }
 
     public String describeCurrentRobotPosition() {
-        Position robotPosition = grid.getPositionFor(currentRobot);
+        return describePositionFor(currentRobot);
+    }
+
+    private String describePositionFor(Robot robot) {
+        Position robotPosition = grid.getPositionFor(robot);
 
         StringBuilder stringBuilder = new StringBuilder();
 
@@ -49,5 +57,13 @@ public class GridController {
         }
 
         return stringBuilder.toString();
+    }
+
+    List<String> getRobotStatuses() {
+        if (grid == null) {
+            return Collections.singletonList("Grid yet to be initialized");
+        } else {
+            return grid.getRobots().stream().map(this::describePositionFor).collect(Collectors.toList());
+        }
     }
 }

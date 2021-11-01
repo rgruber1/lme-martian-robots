@@ -28,6 +28,14 @@ public class CommandRunner {
             return Optional.of("Error: line length should not exceed 100 characters - ignoring sequence");
         }
 
+        if ("STATUS".equals(line)) {
+            for (String robotStatus : gridController.getRobotStatuses()) {
+                System.out.println(robotStatus);
+            }
+        } else if ("QUIT".equals(line)) {
+            System.exit(0);
+        }
+
         if (commandParser.isCoordinates(line)) {
             Coordinates coordinates = commandParser.parseCoordinates(line);
             gridController.setCoordinates(coordinates);

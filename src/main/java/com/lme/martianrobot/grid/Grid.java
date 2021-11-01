@@ -52,4 +52,8 @@ public class Grid {
     public boolean isLost(Robot robot) {
         return lostRobots.contains(robot);
     }
+
+    public List<Robot> getRobots() {
+        return new ArrayList<>(positions.keySet());
+    }
 }
