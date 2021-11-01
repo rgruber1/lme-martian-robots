@@ -35,8 +35,12 @@ public class ApplicationCommandLineRunner implements CommandLineRunner {
             }
 
             if (commandParser.isCoordinates(line)) {
-                Coordinates coordinates = commandParser.parseGridCoords(line);
+                Coordinates coordinates = commandParser.parseCoordinates(line);
                 gridController.setCoordinates(coordinates);
+            }
+
+            if (commandParser.isPosition(line)) {
+                gridController.addRobotPosition(commandParser.parsePosition(line));
             }
 
             if (!gridController.hasGrid()) {

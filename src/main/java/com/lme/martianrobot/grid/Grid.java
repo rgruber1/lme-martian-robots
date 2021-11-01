@@ -1,10 +1,19 @@
 package com.lme.martianrobot.grid;
 
-import lombok.AllArgsConstructor;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-@AllArgsConstructor
 public class Grid {
 
-    private final Coordinates coordinates;
+    private Coordinates coordinates;
+    private Map<Robot, Position> positions = new LinkedHashMap<>();
+
+    public Grid(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    public void addRobot(final Robot robot, final Position initialPosition) {
+        this.positions.put(robot, initialPosition);
+    }
 
 }
