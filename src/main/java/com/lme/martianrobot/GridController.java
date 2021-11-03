@@ -63,4 +63,8 @@ public class GridController {
             return grid.getRobots().stream().map(this::describePositionFor).collect(Collectors.toList());
         }
     }
+
+    public boolean hasRobot() {
+        return currentRobot != null;
+    }
 }

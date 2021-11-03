@@ -3,7 +3,6 @@ package com.lme.martianrobot;
 import com.lme.martianrobot.grid.Coordinates;
 import com.lme.martianrobot.grid.Orientation;
 import com.lme.martianrobot.grid.Position;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,13 +20,17 @@ class CommandRunnerTest {
     @Autowired
     private GridController gridController;
 
-    @BeforeEach
-    void initializeGridCoordinates() {
-        commandRunner.runCommand("5 3");
-    }
-
     @Test
     void testRobot1Sequence() {
+        // TODO move this check to separate test.
+        assertEquals(CommandRunner.GRID_COORDINATES_MISSING_ERROR_MESSAGE, commandRunner.runCommand("0 3 W").get());
+
+        commandRunner.runCommand("5 3");
+
+        // TODO move to this check separate test.
+        assertEquals(CommandRunner.MISSING_ROBOT_POSITION_ERROR_MESSAGE, commandRunner.runCommand("RFRFRFRF").get());
+
+        // then
         assertEquals(new Coordinates(5, 3), gridController.getGrid().getCoordinates());
 
         // Robot 1 scenario
@@ -39,6 +42,10 @@ class CommandRunnerTest {
 
     @Test
     void testRobot2Sequence() {
+        //when
+        commandRunner.runCommand("5 3");
+
+        // then
         assertEquals(new Coordinates(5, 3), gridController.getGrid().getCoordinates());
 
         // robot 2 scenario
@@ -50,9 +57,13 @@ class CommandRunnerTest {
 
     @Test
     void testRobot3Sequence() {
+        //when
+        commandRunner.runCommand("5 3");
+
+        // then
         assertEquals(new Coordinates(5, 3), gridController.getGrid().getCoordinates());
 
-//        // robot 3 scenario
+        // robot 3 scenario
         commandRunner.runCommand("0 3 W");
         assertPositionEquals(0, 3, Orientation.WEST);
         assertEquals("3 3 N LOST", commandRunner.runCommand("LLFFFLFLFL").get());
