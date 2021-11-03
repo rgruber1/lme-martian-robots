@@ -3,14 +3,11 @@ package com.lme.martianrobot;
 import com.lme.martianrobot.grid.Coordinates;
 import com.lme.martianrobot.grid.Orientation;
 import com.lme.martianrobot.grid.Position;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -30,7 +27,7 @@ class CommandRunnerTest {
     }
 
     @Test
-    public void testRobot1Sequence() {
+    void testRobot1Sequence() {
         assertEquals(new Coordinates(5, 3), gridController.getGrid().getCoordinates());
 
         // Robot 1 scenario
@@ -41,7 +38,7 @@ class CommandRunnerTest {
     }
 
     @Test
-    public void testRobot2Sequence() {
+    void testRobot2Sequence() {
         assertEquals(new Coordinates(5, 3), gridController.getGrid().getCoordinates());
 
         // robot 2 scenario
@@ -52,7 +49,7 @@ class CommandRunnerTest {
     }
 
     @Test
-    public void testRobot3Sequence() {
+    void testRobot3Sequence() {
         assertEquals(new Coordinates(5, 3), gridController.getGrid().getCoordinates());
 
 //        // robot 3 scenario

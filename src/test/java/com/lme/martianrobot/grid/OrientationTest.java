@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class OrientationTest {
 
     @Test
-    public void turnRight90Degrees() {
+    void turnRight90Degrees() {
         assertEquals(EAST, NORTH.turnRight90Degrees());
         assertEquals(SOUTH, EAST.turnRight90Degrees());
         assertEquals(WEST, SOUTH.turnRight90Degrees());
@@ -16,7 +16,7 @@ public class OrientationTest {
     }
 
     @Test
-    public void turnLeft90Degrees() {
+    void turnLeft90Degrees() {
         assertEquals(WEST, NORTH.turnLeft90Degrees());
         assertEquals(SOUTH, WEST.turnLeft90Degrees());
         assertEquals(EAST, SOUTH.turnLeft90Degrees());
